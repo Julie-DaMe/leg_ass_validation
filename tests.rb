@@ -86,7 +86,13 @@ class ApplicationTest < Minitest::Test
     refute_equal s.name, nil
   end
 
-
+  def test_validates_term_name_starts_on_ends_on_school_id
+    fall = Term.create(name: "Apex High", starts_on: Date.today, ends_on: Date.today, school_id: 1)
+    refute_equal fall.name, nil
+    refute_equal fall.starts_on, nil
+    refute_equal fall.ends_on, nil
+    refute_equal school_id, nil
+  end
 
 
 end
