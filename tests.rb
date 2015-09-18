@@ -1,28 +1,25 @@
-# Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
-
-# Include both the migration and the app itself
 require './migration'
 require './application'
 
-# Overwrite the development database connection with a test connection.
 ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3',
   database: 'test.sqlite3'
 )
 
-# Gotta run migrations before we can run tests.  Down will fail the first time,
-# so we wrap it in a begin/rescue.
 begin ApplicationMigration.migrate(:down); rescue; end
 ApplicationMigration.migrate(:up)
 
-
-# Finally!  Let's test the thing.
 class ApplicationTest < Minitest::Test
 
-  def test_truth
-    assert true
+  def test_associate_lessons_with_readings
+    l = Lesson.create(name: "First Lesson")
+    r = Reading.create(caption: "First Reading")
+    # l.add_reading(r)
+    # assert_equal [r], Lesson.find(l.id).readings
+    l.readings << r
+    assert l.reload.readings.include?(r)
   end
 
 end
