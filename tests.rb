@@ -91,5 +91,12 @@ class ApplicationTest < Minitest::Test
     refute_equal fall.school_id, nil
   end
 
+  def test_validates_user_first_name_last_name_email
+    u = User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+
+    refute_equal u.first_name, nil
+    refute_equal u.last_name, nil
+    refute_equal u.email, nil
+  end
 
 end
