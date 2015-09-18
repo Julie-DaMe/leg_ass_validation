@@ -80,4 +80,13 @@ class ApplicationTest < Minitest::Test
     c.lessons << l
     assert_equal [r], c.readings
   end
+
+  def test_validates_schools_name
+    s = School.create(name: "Apex High")
+    refute_equal s.name, nil
+  end
+
+
+
+
 end
