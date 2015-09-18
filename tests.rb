@@ -71,4 +71,13 @@ class ApplicationTest < Minitest::Test
     assert_equal [my_lesson], i.lessons
   end
 
+  def test_course_has_readings_through_lessons
+    c = Course.create(name: "First Course")
+    r = Reading.create()
+    l = Lesson.create()
+
+    l.readings << r
+    c.lessons << l
+    assert_equal [r], c.readings
+  end
 end
