@@ -99,4 +99,11 @@ class ApplicationTest < Minitest::Test
     refute_equal u.email, nil
   end
 
+  def test_validate_user_email_uniqueness
+    User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+    j = User.new(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+
+    refute j.save
+  end
+
 end
