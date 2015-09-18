@@ -82,14 +82,23 @@ class ApplicationTest < Minitest::Test
   def test_that_school_has_many_courses_through_terms
     s = School.create(name: "Elkins")
     c = Course.create(name: "Math101")
-    t = Terms.create(name: "First Term")
+    t = Term.create(name: "First Term")
 
-    s.terms << c
-    assert_equal [t], t.courses
+    t.courses << c
+    s.terms << t
+    assert [c], s.courses
   end
 
+  def test_validation_for_name
+    l = Lesson.new()
+    refute l.save
+  end
 
-
+  def test_validation_for_order_number_lesson_id_url
+    Reading.new(order_number: 11, lesson_id:12 , url: "www.yaboi.com")
+    r = Reading.new(order_number: "",lesson_id: "",url: "")
+    refute r.save
+  end
 
 
 
