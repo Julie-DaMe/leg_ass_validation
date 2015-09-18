@@ -47,4 +47,22 @@ class ApplicationTest < Minitest::Test
     assert_equal before-1, Lesson.count
   end
 
+  def test_associate_course_with_course_instructors
+    c = Course.create(name: "First Course")
+    m = CourseInstructor.create()
+    # m.course_id = c.id
+    # assert_equal m.course_id, c.id
+    c.course_instructors << m
+    assert c.course_instructors.include?(m)
+  end
+
+  def test_cannot_destroy_courses_with_students
+    c = Course.create(name: "First Course")
+    j = CourseStudent.create()
+    before = Course.count
+    c.course_students << j
+    c.destroy
+    refute_equal Course.count, before-1
+  end
+
 end
