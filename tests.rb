@@ -15,7 +15,7 @@ ApplicationMigration.migrate(:up)
 
 class ApplicationTest < Minitest::Test
 
-  def test_to_associate_terms_and_schools
+  def test_to_associate_terms_with_schools
     school = School.create(name: "Elkins")
     term = Term.create(name: "First Term")
 
@@ -24,4 +24,12 @@ class ApplicationTest < Minitest::Test
     assert_equal school, term.reload.school
   end
 
+  def test_to_associate_terms_with_courses
+    course = Course.create(name: "Math")
+    term = Term.create(name: "First Term")
+
+    term.add_course(course)
+    assert term.reload.courses.include?(course)
+    assert_equal term, course.reload.term
+  end
 end
