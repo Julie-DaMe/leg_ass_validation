@@ -15,14 +15,14 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_lessons_with_readings
     l = Lesson.create(name: "First Lesson")
-    r = Reading.create(caption: "First Reading")
+    r = Reading.create(caption: "First Reading", order_number: 109, lesson_id: 186, url: "https://holladolla.com")
     l.readings << r
     assert l.reload.readings.include?(r)
   end
 
   def test_readings_destroyed_with_lesson
     l = Lesson.create(name: "First Lesson")
-    r = Reading.create(caption: "First Reading")
+    r = Reading.create(caption: "First Reading", order_number: 109, lesson_id: 486, url: "https://holladolla.com")
     before = Reading.count
     l.readings << r
     l.destroy
@@ -30,7 +30,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_courses_with_lesssons
-    c = Course.create(name: "First Course")
+    c = Course.create(name: "First Course", course_code: "abv123")
     l = Lesson.create(name: "First Lesson")
     c.lessons << l
     assert c.reload.lessons.include?(l)
@@ -46,14 +46,14 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_course_with_course_instructors
-    c = Course.create(name: "First Course")
+    c = Course.create(name: "First Course", course_code: "abr345")
     m = CourseInstructor.create()
     c.course_instructors << m
     assert c.course_instructors.include?(m)
   end
 
   def test_cannot_destroy_courses_with_students
-    c = Course.create(name: "First Course")
+    c = Course.create(name: "First Course", course_code: "abv133")
     j = CourseStudent.create()
     before = Course.count
     c.course_students << j
@@ -69,9 +69,9 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_course_has_readings_through_lessons
-    c = Course.create(name: "First Course")
-    r = Reading.create()
-    l = Lesson.create()
+    c = Course.create(name: "First Course", course_code: "abw153")
+    r = Reading.create(order_number: 123, lesson_id: 146, url: "https://rickrolled.com")
+    l = Lesson.create(name: "Archery")
 
     l.readings << r
     c.lessons << l
