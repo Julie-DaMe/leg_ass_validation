@@ -22,4 +22,17 @@ class ApplicationTest < Minitest::Test
     assert l.reload.readings.include?(r)
   end
 
+  def test_readings_destroyed_with_lesson
+    l = Lesson.create(name: "First Lesson")
+    r = Reading.create(caption: "First Reading")
+    before = Reading.count
+    l.readings << r
+    l.destroy
+    assert_equal before - 1, Reading.count
+  end
+
+  def 
+
+  end
+
 end
