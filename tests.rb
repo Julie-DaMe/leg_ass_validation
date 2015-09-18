@@ -1,12 +1,8 @@
-# Basic test requires
 require 'minitest/autorun'
 require 'minitest/pride'
-
-# Include both the migration and the app itself
 require './migration'
 require './application'
 
-# Overwrite the development database connection with a test connection.
 ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3',
   database: 'test.sqlite3'
@@ -17,12 +13,15 @@ ActiveRecord::Base.establish_connection(
 begin ApplicationMigration.migrate(:down); rescue; end
 ApplicationMigration.migrate(:up)
 
-
-# Finally!  Let's test the thing.
 class ApplicationTest < Minitest::Test
 
-  def test_truth
-    assert true
+  def test_to_associate_terms_and_schools
+    school = School.create(name: "Elkins")
+    term = Term.create(name: "First Term")
+
+    school.add_term(term)
+    assert school.reload.terms.include?(term)
+    assert_equal school, term.reload.school
   end
 
 end

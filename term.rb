@@ -1,7 +1,7 @@
 class Term < ActiveRecord::Base
-
+  belongs_to :school
   default_scope { order('ends_on DESC') }
-
+  validates :name, uniqueness: true
   scope :for_school_id, ->(school_id) { where("school_id = ?", school_id) }
 
   def school_name
