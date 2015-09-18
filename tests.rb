@@ -35,7 +35,7 @@ class ApplicationTest < Minitest::Test
 
   def test_terms_cannot_be_deleted
     term = Term.create(name: "First Term")
-    course = Course.create(name: "Math")
+    course = Course.create(name: "Math101")
     before = Term.count
 
     term.add_course(course)
@@ -44,7 +44,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_to_associate_course_with_courses_student
-    course = Course.create(name: "Math")
+    course = Course.create(name: "Math101")
     student = CourseStudent.create()
 
     course.course_students << student
@@ -52,7 +52,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_courses_cannot_be_deleted
-    course = Course.create(name: "Math")
+    course = Course.create(name: "Math101")
     student = CourseStudent.create()
     before = Course.count
 
@@ -62,8 +62,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_assignmnets_are_destroyed_wtih_courses
-    assignment = Assignment.create(name: "addition")
-    course = Course.create(name: "Math")
+    assignment = Assignment.create(name: "plus")
+    course = Course.create(name: "Math101")
     before = Course.count
 
     course.assignments << assignment
@@ -71,7 +71,41 @@ class ApplicationTest < Minitest::Test
     assert_equal before-1, Course.count
   end
 
-  def test_associate_lessons_with_preclass_assignments
-    
+  def test_associate_lessons_with_pre_class_assignments
+    lesson = Lesson.create(name: "addition")
+    assignment = Assignment.create(name: "plus")
+
+    assignment.lessons << lesson
+    assert_equal [lesson], assignment.lessons
   end
+
+  def test_that_school_has_many_courses_through_terms
+    s = School.create(name: "Elkins")
+    c = Course.create(name: "Math101")
+    t = Terms.create(name: "First Term")
+
+    s.terms << c
+    assert_equal [t], t.courses
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
