@@ -26,7 +26,7 @@ class ApplicationTest < Minitest::Test
 
   def test_to_associate_terms_with_courses
     term = Term.create(name: "First Term")
-    course = Course.create(name: "Math")
+    course = Course.create(name: "Math", course_code: "hey")
 
     term.add_course(course)
     assert term.reload.courses.include?(course)
@@ -35,7 +35,7 @@ class ApplicationTest < Minitest::Test
 
   def test_terms_cannot_be_deleted
     term = Term.create(name: "First Term")
-    course = Course.create(name: "Math101")
+    course = Course.create(name: "Math101", course_code: "hey")
     before = Term.count
 
     term.add_course(course)
@@ -44,7 +44,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_to_associate_course_with_courses_student
-    course = Course.create(name: "Math101")
+    course = Course.create(name: "Math101", course_code: "hey")
     student = CourseStudent.create()
 
     course.course_students << student
@@ -52,7 +52,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_courses_cannot_be_deleted
-    course = Course.create(name: "Math101")
+    course = Course.create(name: "Math101", course_code: "hey")
     student = CourseStudent.create()
     before = Course.count
 
@@ -63,7 +63,7 @@ class ApplicationTest < Minitest::Test
 
   def test_assignmnets_are_destroyed_wtih_courses
     assignment = Assignment.create(name: "plus")
-    course = Course.create(name: "Math101")
+    course = Course.create(name: "Math101", course_code: "hey")
     before = Course.count
 
     course.assignments << assignment
@@ -81,7 +81,7 @@ class ApplicationTest < Minitest::Test
 
   def test_that_school_has_many_courses_through_terms
     s = School.create(name: "Elkins")
-    c = Course.create(name: "Math101")
+    c = Course.create(name: "Math101", course_code: "hey")
     t = Term.create(name: "First Term")
 
     t.courses << c
@@ -100,10 +100,21 @@ class ApplicationTest < Minitest::Test
     refute r.save
   end
 
+  def test_validation_of_regex
+    Reading.new(url: "https//rickroll.com")
+    r = Reading.new(url: "www.rickroll.com")
+    refute r.save
+  end
 
+  def test_courses_have_course_code_and_name
+    Course.new(name: "Math101", course_code: "hey")
+    c = Course.new(name: "", course_code: "")
+    refute c.save
+  end
 
+  def test_course_code_uniqueness_through_terms
 
-
+  end
 
 
 

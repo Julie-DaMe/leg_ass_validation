@@ -1,4 +1,7 @@
 class Course < ActiveRecord::Base
+  validates :course_code, presence: true
+  validates :name, presence: true
+  
   belongs_to :term
   has_many :assignments, dependent: :destroy
   has_many :course_students, dependent: :restrict_with_error
