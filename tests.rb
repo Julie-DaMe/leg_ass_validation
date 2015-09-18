@@ -106,4 +106,14 @@ class ApplicationTest < Minitest::Test
     refute j.save
   end
 
+  def test_user_email_address_correctness
+    User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+    l = User.new(first_name: "Julie", last_name: "David", email: "julie.angela.david@@gmail.com")
+    i = User.new(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmailcom")
+    e = User.new(first_name: "Julie", last_name: "David", email: "julie.angela.davidgmail.com")
+    refute l.save
+    refute i.save
+    refute e.save
+  end
+
 end
