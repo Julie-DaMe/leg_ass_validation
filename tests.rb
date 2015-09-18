@@ -143,7 +143,7 @@ class ApplicationTest < Minitest::Test
 
   def test_to_associate_terms_with_schools
     school = School.create(name: "Elkins")
-    term = Term.create(name: "First Term")
+    term = Term.create(name: "First Term",starts_on: Date.today, ends_on: Date.today, school_id: 1)
 
     school.add_term(term)
     assert school.reload.terms.include?(term)
@@ -151,7 +151,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_to_associate_terms_with_courses
-    term = Term.create(name: "First Term")
+    term = Term.create(name: "First Term", starts_on: Date.today, ends_on: Date.today, school_id: 1)
     course = Course.create(name: "Math", course_code: "Yay675")
 
     term.add_course(course)
@@ -160,7 +160,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_terms_cannot_be_deleted
-    term = Term.create(name: "First Term")
+    term = Term.create(name: "First Term", starts_on: Date.today, ends_on: Date.today, school_id: 1)
     course = Course.create(name: "Math101", course_code: "hey098")
     before = Term.count
 
@@ -188,7 +188,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_assignmnets_are_destroyed_wtih_courses
-    assignment = Assignment.create(name: "plus")
+    assignment = Assignment.create(course_id: 1, name: "Ruby777", percent_of_grade: 10.0)
     course = Course.create(name: "Math101", course_code: "nay345")
     before = Course.count
 
@@ -199,7 +199,7 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_lessons_with_pre_class_assignments
     lesson = Lesson.create(name: "addition")
-    assignment = Assignment.create(name: "plus")
+    assignment = Assignment.create(course_id: 1, name: "Ruby01", percent_of_grade: 10.0)
 
     assignment.lessons << lesson
     assert_equal [lesson], assignment.lessons
@@ -208,7 +208,7 @@ class ApplicationTest < Minitest::Test
   def test_that_school_has_many_courses_through_terms
     s = School.create(name: "Elkins")
     c = Course.create(name: "Math101", course_code: "hey101")
-    t = Term.create(name: "First Term")
+    t = Term.create(name: "First Term", starts_on: Date.today, ends_on: Date.today, school_id: 1)
 
     t.courses << c
     s.terms << t
