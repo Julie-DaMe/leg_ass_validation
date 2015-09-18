@@ -131,4 +131,11 @@ class ApplicationTest < Minitest::Test
     a = Assignment.new(course_id: 1, name: "Ruby101", percent_of_grade: 10.0)
     assert a.save
   end
+
+  def test_assignment_name_must_be_unique_within_course_id
+    a = Assignment.new(course_id: 1, name: "Ruby102", percent_of_grade: 10.0)
+    b = Assignment.new(course_id: 1, name: "Ruby102", percent_of_grade: 10.0)
+    assert a.save
+    refute b.save
+  end
 end
