@@ -1,8 +1,16 @@
 class Course < ActiveRecord::Base
+
   has_many :lessons, dependent: :destroy
   has_many :readings, through: :lessons
   has_many :course_instructors
   has_many :course_students, dependent: :restrict_with_error
+  has_many :assignments, dependent: :destroy
+
+  validates :course_code, presence: true
+  validates :name, presence: true
+  validates :course_code, uniqueness: true
+  validates :course_code, format: {with: /\A\w{3}\s?\d{3}\z/, on: :create}
+  belongs_to :term
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 
