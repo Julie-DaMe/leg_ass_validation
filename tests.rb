@@ -38,4 +38,13 @@ class ApplicationTest < Minitest::Test
     assert c.reload.lessons.include?(l)
   end
 
+  def test_lessons_destroyed_with_course
+    c = Course.create(name: "First Course")
+    l = Lesson.create(name: "First Lesson")
+    before = Lesson.count
+    c.lessons << l
+    c.destroy
+    assert_equal before-1, Lesson.count
+  end
+
 end
