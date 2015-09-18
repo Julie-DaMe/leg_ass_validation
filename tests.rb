@@ -50,8 +50,6 @@ class ApplicationTest < Minitest::Test
   def test_associate_course_with_course_instructors
     c = Course.create(name: "First Course")
     m = CourseInstructor.create()
-    # m.course_id = c.id
-    # assert_equal m.course_id, c.id
     c.course_instructors << m
     assert c.course_instructors.include?(m)
   end
@@ -63,6 +61,14 @@ class ApplicationTest < Minitest::Test
     c.course_students << j
     c.destroy
     refute_equal Course.count, before-1
+  end
+
+  def test_associate_lessons_with_in_class_assignments
+    my_lesson = Lesson.create(name: "First Lesson")
+    i = Assignment.create(name: "In-Class Assignment")
+    i.lessons << my_lesson
+    #assert i.in_class_assignments.include?(my_lesson)
+    assert_equal [my_lesson], i.lessons
   end
 
 end

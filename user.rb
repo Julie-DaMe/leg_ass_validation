@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-
+  has_many :course_students
+  has_many :course_instructors
+  
   scope :want_to_be_instructors, -> { where(wants_to_be_instructor: true) }
   scope :instructors_for_school_id, ->(school_id) { where(school_id: school_id, instructor: true) }
 
