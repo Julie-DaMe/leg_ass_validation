@@ -63,7 +63,7 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_lessons_with_in_class_assignments
     my_lesson = Lesson.create(name: "First Lesson")
-    i = Assignment.create(name: "In-Class Assignment")
+    i = Assignment.create(name: "In-Class Assignment", course_id: 1, percent_of_grade: 10.0)
     i.lessons << my_lesson
     assert_equal [my_lesson], i.lessons
   end
@@ -127,5 +127,8 @@ class ApplicationTest < Minitest::Test
     refute e.save
   end
 
-
+  def test_validates_assignment_course_id_name_percent_of_grade
+    a = Assignment.new(course_id: 1, name: "Ruby101", percent_of_grade: 10.0)
+    assert a.save
+  end
 end
