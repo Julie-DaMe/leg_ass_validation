@@ -16,8 +16,6 @@ class ApplicationTest < Minitest::Test
   def test_associate_lessons_with_readings
     l = Lesson.create(name: "First Lesson")
     r = Reading.create(caption: "First Reading")
-    # l.add_reading(r)
-    # assert_equal [r], Lesson.find(l.id).readings
     l.readings << r
     assert l.reload.readings.include?(r)
   end
@@ -67,7 +65,6 @@ class ApplicationTest < Minitest::Test
     my_lesson = Lesson.create(name: "First Lesson")
     i = Assignment.create(name: "In-Class Assignment")
     i.lessons << my_lesson
-    #assert i.in_class_assignments.include?(my_lesson)
     assert_equal [my_lesson], i.lessons
   end
 
@@ -91,7 +88,7 @@ class ApplicationTest < Minitest::Test
     refute_equal fall.name, nil
     refute_equal fall.starts_on, nil
     refute_equal fall.ends_on, nil
-    refute_equal school_id, nil
+    refute_equal fall.school_id, nil
   end
 
 
