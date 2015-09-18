@@ -116,4 +116,16 @@ class ApplicationTest < Minitest::Test
     refute e.save
   end
 
+  def test_user_photo_url
+    assert User.create(first_name: "Julie", last_name: "David", email: "j@gmail.com", photo_url: "http://photobucket.com")
+    assert User.create(first_name: "Julie", last_name: "David", email: "d@gmail.com", photo_url: "https://photobucket.com")
+    l = User.new(first_name: "Julie", last_name: "David", email: "id@@gmail.com", photo_url: "htttp://photobucket.com")
+    i = User.new(first_name: "Julie", last_name: "David", email: "vid@gmailcom", photo_url: "://photobucket.comhttp://")
+    e = User.new(first_name: "Julie", last_name: "David", email: "avidgmail.com", photo_url: "hhttps://photobucket.com")
+    refute l.save
+    refute i.save
+    refute e.save
+  end
+
+
 end
