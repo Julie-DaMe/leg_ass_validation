@@ -1,7 +1,8 @@
 class Course < ActiveRecord::Base
   validates :course_code, presence: true
   validates :name, presence: true
-  
+  validates :course_code, uniqueness: true
+  validates :course_code, format: {with: /\A\w{3}\s?\d{3}\z/, on: :create}
   belongs_to :term
   has_many :assignments, dependent: :destroy
   has_many :course_students, dependent: :restrict_with_error

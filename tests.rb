@@ -26,7 +26,7 @@ class ApplicationTest < Minitest::Test
 
   def test_to_associate_terms_with_courses
     term = Term.create(name: "First Term")
-    course = Course.create(name: "Math", course_code: "hey")
+    course = Course.create(name: "Math", course_code: "Yay675")
 
     term.add_course(course)
     assert term.reload.courses.include?(course)
@@ -35,7 +35,7 @@ class ApplicationTest < Minitest::Test
 
   def test_terms_cannot_be_deleted
     term = Term.create(name: "First Term")
-    course = Course.create(name: "Math101", course_code: "hey")
+    course = Course.create(name: "Math101", course_code: "hey098")
     before = Term.count
 
     term.add_course(course)
@@ -44,7 +44,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_to_associate_course_with_courses_student
-    course = Course.create(name: "Math101", course_code: "hey")
+    course = Course.create(name: "Math101", course_code: "wha909")
     student = CourseStudent.create()
 
     course.course_students << student
@@ -52,7 +52,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_courses_cannot_be_deleted
-    course = Course.create(name: "Math101", course_code: "hey")
+    course = Course.create(name: "Math101", course_code: "hey678")
     student = CourseStudent.create()
     before = Course.count
 
@@ -63,7 +63,7 @@ class ApplicationTest < Minitest::Test
 
   def test_assignmnets_are_destroyed_wtih_courses
     assignment = Assignment.create(name: "plus")
-    course = Course.create(name: "Math101", course_code: "hey")
+    course = Course.create(name: "Math101", course_code: "nay345")
     before = Course.count
 
     course.assignments << assignment
@@ -81,7 +81,7 @@ class ApplicationTest < Minitest::Test
 
   def test_that_school_has_many_courses_through_terms
     s = School.create(name: "Elkins")
-    c = Course.create(name: "Math101", course_code: "hey")
+    c = Course.create(name: "Math101", course_code: "hey101")
     t = Term.create(name: "First Term")
 
     t.courses << c
@@ -107,19 +107,23 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_courses_have_course_code_and_name
-    Course.new(name: "Math101", course_code: "hey")
+    Course.new(name: "Math101", course_code: "HEY111")
     c = Course.new(name: "", course_code: "")
     refute c.save
   end
 
   def test_course_code_uniqueness_through_terms
+    c1 =  Course.create(name: "Science", course_code: "hey")
+    c = Course.create(name: "Math101", course_code: "hey")
 
+    refute c1 == c
   end
 
-
-
-
-
+  def test_course_code_begins_with_three_letters_ends_with_three_numbers
+    Course.new(name: "Math101", course_code: "REG123")
+    c = Course.new(name: "Math101", course_code: "123REG")
+    refute c.save
+  end
 
 
 
