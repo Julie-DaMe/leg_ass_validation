@@ -31,8 +31,11 @@ class ApplicationTest < Minitest::Test
     assert_equal before - 1, Reading.count
   end
 
-  def 
-
+  def test_associate_courses_with_lesssons
+    c = Course.create(name: "First Course")
+    l = Lesson.create(name: "First Lesson")
+    c.lessons << l
+    assert c.reload.lessons.include?(l)
   end
 
 end
