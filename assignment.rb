@@ -1,6 +1,7 @@
 class Assignment < ActiveRecord::Base
 
   has_many :lessons, foreign_key: :pre_class_assignment_id
+  has_many :lessons, foreign_key: :in_class_assignment_id
   belongs_to :course
   validates :course_id, presence: true
   validates :name, presence: true, uniqueness: { scope: :course_id, message: "Name must be unique within course_id" }
