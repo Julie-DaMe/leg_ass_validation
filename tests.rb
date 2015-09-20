@@ -139,8 +139,6 @@ class ApplicationTest < Minitest::Test
     refute b.save
   end
 
-#Da-Me's tests:
-
   def test_to_associate_terms_with_schools
     school = School.create(name: "Elkins")
     term = Term.create(name: "First Term",starts_on: Date.today, ends_on: Date.today, school_id: 1)
@@ -251,4 +249,24 @@ class ApplicationTest < Minitest::Test
     refute c.save
   end
 
+# New tests
+
+  def test_associate_course_students_with_students_who_are_users
+    c = Course.create(name: "Math101", course_code: "MAT123")
+    student = User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+
+    c.users << student
+    assert_equal [student], c.users
+  end
+
+  def test_associate_course_students_with_assignment_grades
+    cs = CourseStudent.create()
+    ag = AssignmentGrade.create()
+    cs.assignment_grades << ag
+    assert_equal [ag], cs.assignment_grades
+  end
+
+  def test_course_has_many_students_through_the_courses_course_students
+
+  end
 end

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :course_students
+  has_many :course_students, foreign_key: :student_id
   has_many :course_instructors
   validates :first_name, presence: true
   validates :last_name, presence: true

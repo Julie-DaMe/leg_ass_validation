@@ -1,6 +1,7 @@
 class CourseStudent < ActiveRecord::Base
-  belongs_to :course
-
+  has_many :assignment_grades
+  has_and_belongs_to_many :courses
+  has_and_belongs_to_many :users, foreign_key: :student_id
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
 
