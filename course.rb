@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
   has_many :course_students, dependent: :restrict_with_error
   has_many :assignments, dependent: :destroy
   has_many :users
+  has_one :primary_instructor
   validates :course_code, presence: true
   validates :name, presence: true
   validates :course_code, uniqueness: true

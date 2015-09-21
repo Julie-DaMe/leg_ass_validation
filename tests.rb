@@ -15,24 +15,25 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_lessons_with_readings
     l = Lesson.create(name: "First Lesson")
-    r = Reading.create(caption: "First Reading", order_number: 109, lesson_id: 186, url: "https://holladolla.com")
-    l.readings << r
+    r = l.readings.create(caption: "First Reading", order_number: 109, lesson_id: 186, url: "https://holladolla.com")
+    #l.readings << r
     assert l.reload.readings.include?(r)
   end
 
   def test_readings_destroyed_with_lesson
     l = Lesson.create(name: "First Lesson")
-    r = Reading.create(caption: "First Reading", order_number: 109, lesson_id: 486, url: "https://holladolla.com")
+    r = l.readings.create(caption: "First Reading", order_number: 109, lesson_id: 486, url: "https://holladolla.com")
     before = Reading.count
-    l.readings << r
+    #l.readings << r
     l.destroy
     assert_equal before - 1, Reading.count
   end
 
   def test_associate_courses_with_lesssons
     c = Course.create(name: "First Course", course_code: "abv123")
-    l = Lesson.create(name: "First Lesson")
-    c.lessons << l
+    # l = Lesson.create(name: "First Lesson")
+    # c.lessons << l
+    l = c.lessons.create(name: "First Lessson")
     assert c.reload.lessons.include?(l)
   end
 
@@ -47,16 +48,16 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_course_with_course_instructors
     c = Course.create(name: "First Course", course_code: "abr345")
-    m = CourseInstructor.create()
-    c.course_instructors << m
+    m = c.course_instructors.create()
+    #c.course_instructors << m
     assert c.course_instructors.include?(m)
   end
 
   def test_cannot_destroy_courses_with_students
     c = Course.create(name: "First Course", course_code: "abv133")
-    j = CourseStudent.create()
+    j = c.course_students.create()
     before = Course.count
-    c.course_students << j
+    #c.course_students << j
     c.destroy
     refute_equal Course.count, before-1
   end
@@ -79,8 +80,9 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_validates_schools_name
-    s = School.create(name: "Apex High")
-    refute_equal s.name, nil
+    #s = School.create(name: "Apex High")
+    #refute_equal s.name, nil
+    refute School.create().valid?
   end
 
   def test_validates_term_name_starts_on_ends_on_school_id
@@ -253,20 +255,23 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_course_students_with_students_who_are_users
     c = Course.create(name: "Math101", course_code: "MAT123")
-    student = User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
+    student = c.users.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
 
-    c.users << student
     assert_equal [student], c.users
   end
 
   def test_associate_course_students_with_assignment_grades
     cs = CourseStudent.create()
-    ag = AssignmentGrade.create()
-    cs.assignment_grades << ag
+    ag = cs.assignment_grades.create()
+    #cs.assignment_grades << ag
     assert_equal [ag], cs.assignment_grades
   end
 
   def test_course_has_many_students_through_the_courses_course_students
+    
+  end
+
+  def test_associate_course_with_one_primary_instructor
 
   end
 end
