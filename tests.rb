@@ -239,6 +239,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_course_code_uniqueness_through_terms
+    t = Term.create(name: "First Term")
     c1 =  Course.create(name: "Science", course_code: "hey")
     c = Course.create(name: "Math101", course_code: "hey")
 
@@ -250,5 +251,6 @@ class ApplicationTest < Minitest::Test
     c = Course.new(name: "Math101", course_code: "123REG")
     refute c.save
   end
+
 
 end

@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-
+  has_many :instructors
   has_many :lessons, dependent: :destroy
   has_many :readings, through: :lessons
   has_many :course_instructors
