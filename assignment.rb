@@ -1,5 +1,4 @@
 class Assignment < ActiveRecord::Base
-
   has_many :lessons, foreign_key: :pre_class_assignment_id
   has_many :lessons, foreign_key: :in_class_assignment_id
   belongs_to :course

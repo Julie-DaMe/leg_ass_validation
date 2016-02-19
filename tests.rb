@@ -26,7 +26,7 @@ class ApplicationTest < Minitest::Test
     before = Reading.count
     l.readings << r
     l.destroy
-    assert_equal before - 1, Reading.count
+    assert_equal before - 1, Reading.count    
   end
 
   def test_associate_courses_with_lesssons

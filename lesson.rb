@@ -11,7 +11,6 @@ class Lesson < ActiveRecord::Base
 
   def add_reading(reading)
     readings << reading
-
   end
 
   def self.linked_to_assignment(assignment)
