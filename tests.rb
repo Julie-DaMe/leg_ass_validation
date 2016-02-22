@@ -26,7 +26,7 @@ class ApplicationTest < Minitest::Test
     before = Reading.count
     l.readings << r
     l.destroy
-    assert_equal before - 1, Reading.count    
+    assert_equal before - 1, Reading.count
   end
 
   def test_associate_courses_with_lesssons
@@ -93,10 +93,13 @@ class ApplicationTest < Minitest::Test
 
   def test_validates_user_first_name_last_name_email
     u = User.create(first_name: "Julie", last_name: "David", email: "julie.angela.david@gmail.com")
-
     refute_equal u.first_name, nil
     refute_equal u.last_name, nil
     refute_equal u.email, nil
+    # u1 = User.create(first_name: "George Michael", last_name: "Bluth")
+    # u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
+    # assert User.find(u2.id)
+    # refute User.find(u1.id)
   end
 
   def test_validate_user_email_uniqueness
